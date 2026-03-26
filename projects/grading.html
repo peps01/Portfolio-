@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grading System</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+  <rect width='100' height='100' fill='white'/>
+  <text x='50%' y='60%' font-size='60' text-anchor='middle' fill='black' font-family='Arial'>A+</text>
+</svg>">
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            background: #1a1a2e;
+            color: white;
+        }
+        
+        .container {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .wrapper {
+            position: relative;
+        }
+        
+        .image-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .image-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .slide {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .slide img {
+            width: 80%;
+            max-height: 600px;
+            object-fit: cover;
+        }
+        
+        .description {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        
+        .arrow {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+        }
+        
+        .left {
+            left: 10px;
+        }
+        
+        .right {
+            right: 10px;
+        }
+        
+        h1 {
+            color: #e94560;
+        }
+        
+        #homeLink {
+            display: inline-block;
+            color: #e94560;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+        
+        #homeLink:hover {
+            color: #c13651;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../index.html" id="homeLink">🏠 Home</a>
+        <h1>Grading System Preview</h1>
+
+        <div class="wrapper">
+            <div class="arrow left" id="left">&#10094;</div>
+            <div class="arrow right" id="right">&#10095;</div>
+
+            <div class="image-slider" id="slider">
+                <!-- Slides will be inserted here -->
+            </div>
+        </div>
+
+        <div class="description" id="desc">No image selected</div>
+    </div>
+
+    <script>
+        const slider = document.getElementById("slider");
+        const desc = document.getElementById("desc");
+
+        const defaultSlides = [{
+            desc: "This is the homepage of my Grading System project. It serves as the main entry point for users, providing an overview of the system's features and functionalities. From here, users can navigate to different sections of the application to access various services and information.",
+            imageData: "grading_uploads/homepage.png"
+        }, {
+            desc: "This is the page where user can choose what role they want to login as. They can select from different roles such as student, teacher, and parent, each with its own set of features and functionalities tailored to their specific needs within the grading system.",
+            imageData: "grading_uploads/role login.png"
+        }, {
+            desc: "Login page for instructor.",
+            imageData: "grading_uploads/ins login.png"
+        }, {
+            desc: "This is the dashboard for instructor, where they can manage their classes, view student performance, and access various teaching tools. It provides an overview of their courses and allows them to efficiently navigate through their teaching responsibilities.",
+            imageData: "grading_uploads/instructor dash.png"
+        }, {
+            desc: "Instructor can manage their account and update their profile information in this page. They can change their personal details, update their contact information, and manage their account settings to ensure that their profile is accurate and up-to-date.",
+            imageData: "grading_uploads/ins prof.png"
+        }, {
+            desc: "Instructor can manage their subject they hold in this page. They can add new subjects, update existing ones, and remove subjects that are no longer relevant. This allows instructors to keep their subject offerings organized and up-to-date for their students.",
+            imageData: "grading_uploads/ins ass sub.png"
+        }, {
+            desc: "Instructor can manage the attendance of each students whether theyre present, absent, or late. ",
+            imageData: "grading_uploads/ins attendance.png"
+        }, {
+            desc: "Instructor can assigned subject to each sections he/she holds.",
+            imageData: "grading_uploads/ass sub sec.png"
+        }, {
+            desc: "This is the page where instructor can manage the grades of every students in every sections.",
+            imageData: "grading_uploads/ins grade manage.png"
+        }, {
+            desc: "This page shows the records of Instructors quizes, assignments, activities and exams that they have created for their students. Instructors can view the details of each record, including the title, description, and associated course information.",
+            imageData: "grading_uploads/ins records.png"
+        }, {
+            desc: "Login page for students.",
+            imageData: "grading_uploads/stud login.png"
+        }, {
+            desc: "Students can view their grades and performance in this page. They can see their overall grade for each subject, as well as detailed breakdowns of their performance on assignments, quizzes, and exams. This allows students to track their progress and identify areas where they may need to improve.",
+            imageData: "grading_uploads/stud grades.png"
+        }, {
+            desc: "Students can submit appeal for their grades in this page. They can provide details about their appeal, such as the reason for the appeal and any supporting evidence. This allows students to request a review of their grades and seek clarification or adjustments if they believe there has been an error or unfair grading.",
+            imageData: "grading_uploads/stud appeal.png"
+        }, {
+            desc: "This is the parents portal where they can use the code given to them by the school to access their child's performance and grades. Parents can view their child's academic progress, attendance records, and communicate with teachers through this portal.",
+            imageData: "grading_uploads/parents login.png"
+        }, {
+            desc: "Parents can view the details of their child's USN, section and subjects they are enrolled in. This information helps parents stay informed about their child's academic progress and allows them to support their education effectively.",
+            imageData: "grading_uploads/par sub attend.png"
+        }, {
+            desc: "Parents can view the grades of their child in this page. They can see their overall grade for each subject, as well as detailed breakdowns of their performance on assignments, quizzes, and exams. This allows parents to track their child's progress and identify areas where they may need to provide additional support.",
+            imageData: "grading_uploads/par stud grades.png"
+        }, {
+            desc: "This is the login page for the admin. Admin can manage the users of the system, including students, instructors, and parents. They can create new user accounts, update existing ones, and remove accounts that are no longer needed. This allows the admin to maintain an organized and secure user database for the grading system.",
+            imageData: "grading_uploads/admin login.png"
+        }, {
+            desc: "Admin can view the student records in this page. They can see the details of each student, including their personal information, academic performance, and attendance records. They can also generate the code for the parents to access their child's performance and grades. This allows the admin to manage student information effectively and provide necessary support to students and parents.",
+            imageData: "grading_uploads/admin stud rec.png"
+        }, {
+            desc: "Admin can view the instructor records in this page. They can see the details of each instructor, including their personal information, courses they teach, and performance records. This allows the admin to manage instructor information effectively and ensure that instructors are providing quality education to students.",
+            imageData: "grading_uploads/admin instruc list.png"
+        }, {
+            desc: "This page are for pending accounts that the admin needs to approve before they can access the system. Admin can review the details of each pending account, including the user's information and reason for registration. This allows the admin to maintain control over who can access the grading system and ensure that only authorized users are granted access.",
+            imageData: "grading_uploads/admin acc manage.png"
+        }, {
+            desc: "Admin can add subjects in this page. They can create new subjects, update existing ones, and remove subjects that are no longer relevant.",
+            imageData: "grading_uploads/admin acc manage.png"
+        }, {
+            desc: "Admin can add subjects in this page. They can create new subjects, update existing ones, and remove subjects that are no longer relevant.",
+            imageData: "grading_uploads/admin add sub.png"
+        }, {
+            desc: "This page allows the admin to manage the courses offered in the grading system. Admin can add new courses, update existing ones, and remove courses that are no longer relevant. This helps ensure that the course offerings are up-to-date and aligned with the needs of students and instructors.",
+            imageData: "grading_uploads/admin manage course.png"
+        }, {
+            desc: "Admin can manage the subjects offered in the grading system. They can add new subjects, update existing ones, and remove subjects that are no longer relevant.",
+            imageData: "grading_uploads/admin manage sub.png"
+        }, {
+            desc: "This is the database table structure for the grading system.",
+            imageData: "grading_uploads/grading db.png"
+        }];
+
+        function createSlide(description, imageSrc) {
+            const newSlide = document.createElement("div");
+            newSlide.classList.add("slide");
+            newSlide.dataset.desc = description;
+            newSlide.innerHTML = `<img src="${imageSrc}" alt="${description}">`;
+            slider.appendChild(newSlide);
+        }
+
+        defaultSlides.forEach(slide => createSlide(slide.desc, slide.imageData));
+
+        let currentIndex = 0;
+
+        function scrollToSlide(index) {
+            const allSlides = document.querySelectorAll(".slide");
+
+            if (index < 0) index = 0;
+            if (index >= allSlides.length) index = allSlides.length - 1;
+
+            currentIndex = index;
+
+            allSlides[index].scrollIntoView({
+                behavior: "smooth",
+                inline: "center"
+            });
+        }
+
+        document.getElementById("right").onclick = () => {
+            scrollToSlide(currentIndex + 1);
+        };
+
+        document.getElementById("left").onclick = () => {
+            scrollToSlide(currentIndex - 1);
+        };
+
+        slider.addEventListener("scroll", () => {
+            const allSlides = document.querySelectorAll(".slide");
+            let found = false;
+            allSlides.forEach((slide, index) => {
+                const rect = slide.getBoundingClientRect();
+                const center = window.innerWidth / 2;
+                if (rect.left < center && rect.right > center) {
+                    desc.textContent = slide.dataset.desc;
+                    currentIndex = index;
+                    found = true;
+                }
+            });
+            if (!found) {
+                desc.textContent = "No image selected";
+            }
+        });
+
+        // Trigger initial description
+        setTimeout(() => slider.dispatchEvent(new Event("scroll")), 100);
+    </script>
+</body>
+
+</html>
