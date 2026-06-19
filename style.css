@@ -165,6 +165,38 @@ nav {
     width: 15%;
 }
 
+.python {
+    width: 30%;
+}
+
+.django {
+    width: 25%;
+}
+
+.vue {
+    width: 20%;
+}
+
+.cashscript {
+    width: 15%;
+}
+
+.docker {
+    width: 20%;
+}
+
+.git {
+    width: 25%;
+}
+
+.postgresql {
+    width: 20%;
+}
+
+.redis-celery {
+    width: 15%;
+}
+
 
 /* PROJECTS */
 
@@ -186,6 +218,12 @@ nav {
 
 .project-card:hover {
     transform: translateY(-10px);
+}
+
+.project-card-link {
+    display: block;
+    text-decoration: none;
+    color: #333;
 }
 
 .tech-stack {
