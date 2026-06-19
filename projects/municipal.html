@@ -5,92 +5,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Municipal E-Services</title>
-	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
     <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background: #1a1a2e;
-            color: white;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(20, 184, 166, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(239, 83, 80, 0.1) 0%, transparent 50%);
+            animation: move 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
         }
-        
+
+        @keyframes move {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(30px, -50px); }
+            50% { transform: translate(-20px, 20px); }
+            75% { transform: translate(50px, 30px); }
+        }
+
+        body {
+            background: var(--bg-white);
+            color: var(--text-dark);
+            margin: 0;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        }
+
         .container {
-            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
             text-align: center;
             position: relative;
         }
-        
+
+        h1 {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 32px;
+            margin-top: 60px;
+        }
+
+        #homeLink {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4em;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            position: absolute;
+            left: 20px;
+            top: 24px;
+        }
+        #homeLink:hover {
+            background: rgba(20, 184, 166, 0.1);
+        }
+
         .wrapper {
             position: relative;
         }
-        
+
         .image-slider {
             display: flex;
             overflow-x: auto;
             scroll-behavior: smooth;
             gap: 20px;
-            padding: 20px;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
         }
-        
-        .image-slider::-webkit-scrollbar {
-            display: none;
-        }
-        
+        .image-slider::-webkit-scrollbar { display: none; }
+
         .slide {
             min-width: 100%;
             display: flex;
             justify-content: center;
+            align-items: center;
+            scroll-snap-align: center;
         }
-        
+
         .slide img {
-            width: 100%;
-            max-height: 600px;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 500px;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
         }
-        
+
         .description {
-            margin-top: 20px;
-            font-size: 18px;
+            margin-top: 24px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-light);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: 3em;
         }
-        
+
+        .counter {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
         .arrow {
             position: absolute;
-            top: 40%;
+            top: 50%;
             transform: translateY(-50%);
-            font-size: 40px;
+            font-size: 32px;
             cursor: pointer;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
+            background: var(--bg-gray);
+            color: var(--secondary);
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 50%;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            z-index: 2;
+            user-select: none;
         }
-        
-        .left {
-            left: 10px;
+        .arrow:hover {
+            background: var(--secondary);
+            color: white;
         }
-        
-        .right {
-            right: 10px;
+        .left { left: 10px; }
+        .right { right: 10px; }
+
+        @media (max-width: 768px) {
+            .container { padding: 20px 12px; }
+            h1 { font-size: 22px; margin-top: 50px; }
+            .slide img { max-height: 350px; }
+            .arrow { width: 40px; height: 40px; font-size: 24px; }
+            #homeLink { position: static; display: inline-flex; margin-bottom: 16px; }
         }
-        
-        h1 {
-            color: #e94560;
-        }
-        
-        #homeLink {
-            display: inline-block;
-            color: #e94560;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            position: absolute;
-            left: 20px;
-            top: 20px;
-        }
-        
-        #homeLink:hover {
-            color: #c13651;
-            text-decoration: none;
+
+        @media (max-width: 480px) {
+            .slide img { max-height: 280px; }
+            .description { font-size: 14px; }
         }
     </style>
 </head>
@@ -104,17 +170,17 @@
             <div class="arrow left" id="left">&#10094;</div>
             <div class="arrow right" id="right">&#10095;</div>
 
-            <div class="image-slider" id="slider">
-                <!-- Slides will be inserted here -->
-            </div>
+            <div class="image-slider" id="slider"></div>
         </div>
 
         <div class="description" id="desc">No image selected</div>
+        <div class="counter" id="counter"></div>
     </div>
 
     <script>
         const slider = document.getElementById("slider");
         const desc = document.getElementById("desc");
+        const counter = document.getElementById("counter");
 
         const defaultSlides = [{
             desc: "This is the home page of the Municipal E-Services System.",
@@ -188,29 +254,22 @@
 
         defaultSlides.forEach(slide => createSlide(slide.desc, slide.imageData));
 
+        function updateCounter(index) {
+            counter.textContent = `${index + 1} / ${defaultSlides.length}`;
+        }
+
         let currentIndex = 0;
 
         function scrollToSlide(index) {
             const allSlides = document.querySelectorAll(".slide");
-
             if (index < 0) index = 0;
             if (index >= allSlides.length) index = allSlides.length - 1;
-
             currentIndex = index;
-
-            allSlides[index].scrollIntoView({
-                behavior: "smooth",
-                inline: "center"
-            });
+            allSlides[index].scrollIntoView({ behavior: "smooth", inline: "center" });
         }
 
-        document.getElementById("right").onclick = () => {
-            scrollToSlide(currentIndex + 1);
-        };
-
-        document.getElementById("left").onclick = () => {
-            scrollToSlide(currentIndex - 1);
-        };
+        document.getElementById("right").onclick = () => scrollToSlide(currentIndex + 1);
+        document.getElementById("left").onclick = () => scrollToSlide(currentIndex - 1);
 
         slider.addEventListener("scroll", () => {
             const allSlides = document.querySelectorAll(".slide");
@@ -221,6 +280,7 @@
                 if (rect.left < center && rect.right > center) {
                     desc.textContent = slide.dataset.desc;
                     currentIndex = index;
+                    updateCounter(index);
                     found = true;
                 }
             });
@@ -229,8 +289,9 @@
             }
         });
 
-        // Trigger initial description
-        setTimeout(() => slider.dispatchEvent(new Event("scroll")), 100);
+        setTimeout(() => {
+            slider.dispatchEvent(new Event("scroll"));
+        }, 100);
     </script>
 </body>
 
