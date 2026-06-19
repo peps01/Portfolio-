@@ -1,10 +1,10 @@
 /* Color Palette */
 :root {
-  --primary: #F3F4F6;
-  --secondary: #3B82F6;
-  --accent: #EC4899;
-  --text-dark: #E5E7EB;
-  --text-light: #9CA3AF;
+  --primary: #F0FDF4;
+  --secondary: #10B981;
+  --accent: #F59E0B;
+  --text-dark: #F3F4F6;
+  --text-light: #D1D5DB;
   --bg-white: #0F172A;
   --bg-gray: #1F2937;
   --border: #374151;
