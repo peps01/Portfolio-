@@ -1,86 +1,45 @@
-// Hamburger menu toggle
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
-const links = document.querySelectorAll('.nav-links a');
-const backdrop = document.getElementById('backdrop');
+// Active nav link on scroll
+document.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('section[id], footer[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-
-    // ✅ moved here
-    if (backdrop) {
-        backdrop.classList.toggle('active');
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (scrollY >= sectionTop) {
+      current = section.getAttribute('id');
     }
-});
+  });
 
-// Close menu when clicking a link
-links.forEach(link => {
-    link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-
-        // ✅ moved here
-        if (backdrop) {
-            backdrop.classList.remove('active');
-        }
-    });
-});
-
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (
-        !hamburger.contains(e.target) &&
-        !navLinks.contains(e.target)
-    ) {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-
-        // ✅ moved here
-        if (backdrop) {
-            backdrop.classList.remove('active');
-        }
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${current}`) {
+      link.classList.add('active');
     }
+  });
 });
 
-// Scroll reveal animation
-const reveal = () => {
-    const reveals = document.querySelectorAll(".reveal");
-    const windowHeight = window.innerHeight;
-    const elementVisible = 100;
+// Mobile hamburger menu
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger?.addEventListener('click', () => {
+  navLinks.classList.toggle('show');
+});
 
-    // ✅ renamed variable (no conflict)
-    reveals.forEach((item) => {
-        const elementTop = item.getBoundingClientRect().top;
-        if (elementTop < windowHeight - elementVisible) {
-            item.classList.add("active");
-        }
-    });
-};
+// Close menu when clicking a nav link
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('show');
+  });
+});
 
-window.addEventListener("scroll", reveal);
-reveal();
-
-// Smooth scroll
+// Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function(e) {
-        e.preventDefault();
-
-        // ✅ added safety check
-        const target = document.querySelector(this.getAttribute("href"));
-        if (target) {
-            target.scrollIntoView({
-                behavior: "smooth"
-            });
-        }
-    });
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
 });
-
-// Add click event for backdrop
-if (backdrop) {
-    backdrop.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-        backdrop.classList.remove('active');
-    });
-}
